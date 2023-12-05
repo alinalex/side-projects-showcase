@@ -9,20 +9,23 @@ export async function createProject(prevState: any, formData: FormData) {
   const schema = z.object({
     sideProjectName: z.string().min(1, { message: 'side-project name cannot be empty.' }),
     sideProjectUrl: z.string().url({ message: 'invalid side-project url.' }),
+    sideProjectCodeUrl: z.string().url({ message: 'invalid side-project url.' }),
     sideProjectDescription: z.string().min(1, { message: 'side-project name cannot be empty.' }),
-    sideProjectTechStack: z.string().regex(/^\w+(,\w+)*$/, { message: 'daadadada' })
-    // z.string().min(1, { message: 'side-project tech stack cannot be empty' }).includes(',', { message: 'input values should be comma separated.' })
+    sideProjectTechStack: z.string().min(1, { message: 'side-project tech stack cannot be empty' }),
+    sideProjectTopic: z.string().min(1, { message: 'side-project topic cannot be empty' }),
   })
 
   const parse = schema.safeParse({
     sideProjectName: formData.get('sideProjectName'),
     sideProjectUrl: formData.get('sideProjectUrl'),
+    sideProjectCodeUrl: formData.get('sideProjectCodeUrl'),
     sideProjectDescription: formData.get('sideProjectDescription'),
     sideProjectTechStack: formData.get('sideProjectTechStack'),
+    sideProjectTopic: formData.get('sideProjectTopic'),
   })
 
   if (!parse.success) {
-    console.log(parse.error.format());
+    // console.log(parse.error.format());
     return { message: 'Failed to create side-project', errors: parse.error.format(), dbEror: '' }
   }
 
@@ -32,12 +35,16 @@ export async function createProject(prevState: any, formData: FormData) {
     await supabase
       .from('side-projects')
       .insert([
-        { name: data.sideProjectName },
+        {
+          name: data.sideProjectName,
+          tech_stack: data.sideProjectTechStack.split(','),
+          topics: data.sideProjectTopic.split(','),
+        },
       ]);
 
     revalidatePath('/')
     return { message: `Added side-project: ${data.sideProjectName}`, errors: addSideProjectFormErrors, dbEror: '' }
   } catch (e) {
-    return { message: 'Failed to create side-project', dbEror: 'Db Error' }
+    return { message: 'Failed to create side-project', errors: addSideProjectFormErrors, dbEror: 'Db Error' }
   }
 }

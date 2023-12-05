@@ -37,6 +37,7 @@ export default async function Home() {
   //   .select('*')
 
   // console.log('data', sideProjectsData);
+
   return (
     <>
       <section className="flex flex-col items-center">
