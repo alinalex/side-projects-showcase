@@ -21,7 +21,7 @@ export default function RootLayout({
       "text-black bg-white dark:text-white dark:bg-[#111010]",
       GeistSans.variable,
       GeistMono.variable)}>
-      <body className="p-4">
+      <body className="p-4" suppressHydrationWarning={true}>
         <main>
           {children}
         </main>

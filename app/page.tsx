@@ -8,7 +8,9 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
+import supabase from "./supabase"
 
 const dummyProjectsData = [
   {
@@ -29,7 +31,12 @@ const dummyProjectsData = [
   }
 ]
 
-export default function Home() {
+export default async function Home() {
+  // let { data: sideProjectsData, error } = await supabase
+  //   .from('side-projects')
+  //   .select('*')
+
+  // console.log('data', sideProjectsData);
   return (
     <>
       <section className="flex flex-col items-center">
@@ -45,13 +52,13 @@ export default function Home() {
           <div key={project.title}>
             <Card>
               <CardHeader>
-                <div className="flex items-center">
+                <div className="flex items-center group">
                   <Avatar>
                     <AvatarImage src={project.logoSrc} />
                     <AvatarFallback>{project.title?.slice(0, 2)?.toLocaleUpperCase()}</AvatarFallback>
                   </Avatar>
                   <CardTitle className="ml-2">{project.title}</CardTitle>
-                  <Link href={project.projectLink} className="ml-4" target="_blank">Visit</Link>
+                  <Link href={project.projectLink} className="ml-4" target="_blank"><ArrowUpRight className="transform transition-transform duration-300 group-hover:-rotate-12" /></Link>
                 </div>
                 <CardDescription>{project.description}</CardDescription>
               </CardHeader>
@@ -60,14 +67,14 @@ export default function Home() {
                   <p className="mb-2">Tech Stack:</p>
                   <div className="truncate" title={project.techStack.join(', ')}>
                     {project.techStack?.map((stack, index) => (
-                      <span className={`${index > 0 && 'ml-3'}`}>{stack}</span>
+                      <span key={index} className={`${index > 0 && 'ml-3'}`}>{stack}</span>
                     ))}
                   </div>
                 </div>
                 <div>
                   <div>
                     {project.hashTags?.map((hashTag, index) => (
-                      <span className={`${index > 0 && 'ml-3'} italic`}>#{hashTag}</span>
+                      <span key={index} className={`${index > 0 && 'ml-3'} italic`}>#{hashTag}</span>
                     ))}
                   </div>
                 </div>
