@@ -5,22 +5,14 @@ import { createProject } from "../actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Loader2, AlertTriangle, XCircle } from "lucide-react"
-import { ZodFormattedError } from "zod"
+import { Loader2, XCircle } from "lucide-react"
 import { addSideProjectFormErrors } from "@/constants"
 import { useState } from "react"
+import { CreateProjectState } from "@/types"
+import PasteUrlDialog from "@/components/createProject/PasteUrlDialog"
+import FormError from "@/components/shared/FormError"
 
-const initialState: {
-  message: string, errors: ZodFormattedError<{
-    sideProjectName: string;
-    sideProjectUrl: string;
-    sideProjectCodeUrl: string;
-    sideProjectDescription: string;
-    sideProjectTechStack: string;
-    sideProjectTopic: string;
-  }, string>,
-  dbEror: string
-} = {
+const initialState: CreateProjectState = {
   message: '',
   errors: addSideProjectFormErrors,
   dbEror: '',
@@ -41,7 +33,7 @@ function FormFieldItemError({ errors }: { errors: string[] }) {
   if (!errors?.length) return null;
   return (
     <div>
-      {errors.map((error, index) => <div key={index} className="text-red-800 flex items-center"><AlertTriangle /><p className="ml-2">Error: {error}</p></div>)}
+      {errors.map((error, index) => <FormError key={index} error={error} />)}
     </div>
   )
 }
@@ -52,6 +44,9 @@ export default function AddProject() {
   const [sideProjectTopicArray, setSideProjectTopicArray] = useState<string[]>([]);
   const [sideProjectTopicInputValue, setSideProjectTopicInputValue] = useState('');
   const [sideProjectTechStackInputValue, setSideProjectTechStackInputValue] = useState('');
+  const [taglineLength, setTaglineLength] = useState(0);
+  const [descriptionLength, setDescriptionLength] = useState(0);
+  const [sideProjectLogoUrl, setSideProjectLogoUrl] = useState('');
 
   function addTechnology() {
     if (!sideProjectTechStackInputValue.length) return;
@@ -85,6 +80,34 @@ export default function AddProject() {
           <FormFieldItemError errors={state?.errors?.sideProjectName?._errors || []} />
         </div>
         <div className="form-item">
+          <Label htmlFor="sideProjectLogo">Paste a URL for your side-project logo</Label>
+          <div className="flex items-center pt-4">
+            <div className="mr-8 w-[80px] h-[80px] relative">
+              {sideProjectLogoUrl.length === 0 ? <div className="w-full h-full border-2 border-dashed rounded-[4px] border-[#d9e1ec]" /> :
+                <div className="logoWrapper"><img src={sideProjectLogoUrl} alt="logo" className="w-full h-full" /><XCircle className="absolute -top-3 -right-3 cursor-pointer" onClick={(e) => setSideProjectLogoUrl('')} /></div>}
+            </div>
+            <PasteUrlDialog url={sideProjectLogoUrl} saveChanges={(url) => setSideProjectLogoUrl(url)} />
+            <Input type="hidden" placeholder="your side-project logo URL" id="sideProjectLogoUrl" name="sideProjectLogoUrl" value={sideProjectLogoUrl} />
+          </div>
+          <FormFieldItemError errors={state?.errors?.sideProjectLogoUrl?._errors || []} />
+        </div>
+        <div className="form-item">
+          <div className="flex justify-between items-center">
+            <Label htmlFor="sideProjectTagline">Enter side-project tagline</Label>
+            <p className="text-sm">{taglineLength}/40</p>
+          </div>
+          <Input type="text" placeholder="your side-project tagline" id="sideProjectTagline" name="sideProjectTagline" maxLength={40} onChange={(e) => setTaglineLength(e.target.value.length)} />
+          <FormFieldItemError errors={state?.errors?.sideProjectTagline?._errors || []} />
+        </div>
+        <div className="form-item">
+          <div className="flex justify-between items-center">
+            <Label htmlFor="sideProjectDescription">Enter side-project description</Label>
+            <p className="text-sm">{descriptionLength}/60</p>
+          </div>
+          <Input type="text" placeholder="your side-project description" id="sideProjectDescription" name="sideProjectDescription" maxLength={60} onChange={(e) => setDescriptionLength(e.target.value.length)} />
+          <FormFieldItemError errors={state?.errors?.sideProjectDescription?._errors || []} />
+        </div>
+        <div className="form-item">
           <Label htmlFor="sideProjectUrl">Enter side-project URL</Label>
           <Input type="text" placeholder="your side-project URL" id="sideProjectUrl" name="sideProjectUrl" />
           <FormFieldItemError errors={state?.errors?.sideProjectUrl?._errors || []} />
@@ -93,11 +116,6 @@ export default function AddProject() {
           <Label htmlFor="sideProjectCodeUrl">Enter side-project code repository URL</Label>
           <Input type="text" placeholder="your side-project URL" id="sideProjectCodeUrl" name="sideProjectCodeUrl" />
           <FormFieldItemError errors={state?.errors?.sideProjectCodeUrl?._errors || []} />
-        </div>
-        <div className="form-item">
-          <Label htmlFor="sideProjectDescription">Enter side-project description</Label>
-          <Input type="text" placeholder="your side-project description" id="sideProjectDescription" name="sideProjectDescription" />
-          <FormFieldItemError errors={state?.errors?.sideProjectDescription?._errors || []} />
         </div>
         <div className="form-item">
           <Label htmlFor="sideProjectTechStack">Enter side-project tech stack</Label>
