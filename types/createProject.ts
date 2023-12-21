@@ -12,5 +12,5 @@ export type CreateProjectState = {
         sideProjectTechStack: string;
         sideProjectTopic: string;
     }, string>,
-    dbEror: string
+    dbError: string
 }

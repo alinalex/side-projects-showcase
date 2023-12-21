@@ -1,5 +1,6 @@
 'use server'
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 import supabase from '../supabase'
 import { CreateProjectState } from '@/types'
 import { sideProjectSchema } from '@/zodSchemas/formSchemas'
@@ -18,25 +19,35 @@ export async function createProject(prevState: CreateProjectState, formData: For
   })
 
   if (!parse.success) {
-    return { message: 'Failed to create side-project', errors: parse.error.format(), dbEror: prevState.dbEror }
+    return { message: 'Failed to create side-project', errors: parse.error.format(), dbError: prevState.dbError }
   }
 
   const data = parse.data
 
+  let databaseSuccess = true;
   try {
-    await supabase
+    const { data: response, error } = await supabase
       .from('side-projects')
       .insert([
         {
           name: data.sideProjectName,
-          tech_stack: data.sideProjectTechStack.split(','),
+          productUrl: data.sideProjectUrl,
+          logoUrl: data.sideProjectLogoUrl,
+          description: data.sideProjectDescription,
+          tagline: data.sideProjectTagline,
+          repoUrl: data.sideProjectCodeUrl,
+          techStack: data.sideProjectTechStack.split(','),
           topics: data.sideProjectTopic.split(','),
         },
       ]);
-
-    revalidatePath('/')
-    return { message: `Added side-project: ${data.sideProjectName}`, errors: prevState.errors, dbEror: prevState.dbEror }
+    if (error) throw error;
   } catch (e) {
-    return { message: 'Failed to create side-project', errors: prevState.errors, dbEror: 'An error occured, please try again.' }
+    databaseSuccess = false;
+  } finally {
+    if (databaseSuccess) {
+      revalidatePath('/')
+      redirect('/');
+    }
+    return { message: 'An error occured, please try again.', errors: prevState.errors, dbError: 'An error occured, please try again.' }
   }
 }

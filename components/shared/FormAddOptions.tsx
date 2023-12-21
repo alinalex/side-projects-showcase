@@ -3,9 +3,10 @@ import { Label } from "@/components/ui/label"
 import FormFieldItemError from "./FormFieldItemError"
 import { Button } from "../ui/button"
 import { XCircle } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function FormAddOptions({ label, placeholder, id, name, errors, className, btnTitle, initialOptions = [] }: { label: string, placeholder: string, id: string, name: string, errors: string[], className: string, btnTitle: string, initialOptions?: string[] }) {
+  const [shouldShowError, setShouldShowError] = useState(true);
   const [optionsArray, setOptionsArray] = useState<string[]>(initialOptions);
   const [optionsInputValue, setOptionsInputValue] = useState('');
 
@@ -19,6 +20,10 @@ export default function FormAddOptions({ label, placeholder, id, name, errors, c
     setOptionsArray(updatedTechnologies);
   }
 
+  useEffect(() => {
+    setShouldShowError(!optionsArray.toString().length);
+  }, [optionsArray])
+
   return (
     <div className={`${className}`}>
       <Label htmlFor={name}>{label}</Label>
@@ -27,15 +32,15 @@ export default function FormAddOptions({ label, placeholder, id, name, errors, c
         <Button disabled={!optionsInputValue.length} className="ml-4" onClick={addOption}>{btnTitle}</Button>
       </div>
       <div className="flex items-center">
-        {optionsArray.map(option => (
-          <div key={option} className="flex items-center mr-4 last:mr-0">
+        {optionsArray.map((option, index) => (
+          <div key={`${option}${index}`} className="flex items-center mr-4 last:mr-0">
             <div>{option}</div>
             <XCircle className="ml-2 cursor-pointer" onClick={(e) => deleteOption(option)} />
           </div>
         ))}
       </div>
       <Input type="hidden" id={id} name={name} value={optionsArray.toString()} />
-      <FormFieldItemError errors={errors} />
+      {shouldShowError && <FormFieldItemError errors={errors} />}
     </div>
   )
 }
