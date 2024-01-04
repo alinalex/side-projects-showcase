@@ -1,9 +1,10 @@
 'use server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import supabase from '../supabase'
 import { CreateProjectState } from '@/types'
 import { sideProjectSchema } from '@/zodSchemas/formSchemas'
+import { getUserId, getUserToken } from '@/lib/authUtils'
+import { addSideProject } from '../supabaseRequests'
 
 export async function createProject(prevState: CreateProjectState, formData: FormData) {
 
@@ -23,23 +24,11 @@ export async function createProject(prevState: CreateProjectState, formData: For
   }
 
   const data = parse.data
-
   let databaseSuccess = true;
   try {
-    const { data: response, error } = await supabase
-      .from('side-projects')
-      .insert([
-        {
-          name: data.sideProjectName,
-          productUrl: data.sideProjectUrl,
-          logoUrl: data.sideProjectLogoUrl,
-          description: data.sideProjectDescription,
-          tagline: data.sideProjectTagline,
-          repoUrl: data.sideProjectCodeUrl,
-          techStack: data.sideProjectTechStack.split(','),
-          topics: data.sideProjectTopic.split(','),
-        },
-      ]);
+    const userId = getUserId();
+    const token = await getUserToken();
+    const { data: response, error } = await addSideProject({ userId, token, sideProject: data });
     if (error) throw error;
   } catch (e) {
     databaseSuccess = false;

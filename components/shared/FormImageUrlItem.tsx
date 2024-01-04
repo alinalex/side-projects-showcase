@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import PasteUrlDialog from "../createProject/PasteUrlDialog";
 import { XCircle } from "lucide-react";
 
-export default function FormImageUrlItem({ label, placeholder, id, name, errors, className }: { label: string, placeholder: string, id: string, name: string, errors: string[], className: string }) {
-  const [imageUrl, setImageUrl] = useState('');
+export default function FormImageUrlItem({ label, placeholder, id, name, errors, className, initialImageUrl = '' }: { label: string, placeholder: string, id: string, name: string, errors: string[], className: string, initialImageUrl?: string }) {
+  const [imageUrl, setImageUrl] = useState(initialImageUrl);
   const [shouldShowError, setShouldShowError] = useState(true);
 
   useEffect(() => {

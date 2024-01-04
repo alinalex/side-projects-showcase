@@ -1,4 +1,4 @@
-import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
+import { authMiddleware, currentUser, redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 
@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 export default authMiddleware({
   publicRoutes: ['/', '/:handler'],
-  afterAuth(auth, req, evt) {
+  async afterAuth(auth, req, evt) {
 
     if (req.nextUrl.pathname === '/register' || req.nextUrl.pathname === '/dashboard') {
       const home = new URL('/', req.nextUrl.origin);

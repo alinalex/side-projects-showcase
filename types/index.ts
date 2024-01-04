@@ -1,5 +1,9 @@
-import type { CreateProjectState } from "./createProject";
+import type { CreateProjectState, SideProject } from "./createProject";
+import type { UserInfo, UserInfoState } from "./userInfo";
 
 export {
-    CreateProjectState
+	CreateProjectState,
+	SideProject,
+	UserInfo,
+	UserInfoState,
 }

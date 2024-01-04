@@ -1,5 +1,6 @@
-import { addSideProjectFormErrors } from "./form";
+import { addSideProjectFormErrors, updateUserInfoFormErrors } from "./form";
 
 export {
-    addSideProjectFormErrors
+    addSideProjectFormErrors,
+    updateUserInfoFormErrors,
 }

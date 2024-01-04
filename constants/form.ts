@@ -8,3 +8,12 @@ export const addSideProjectFormErrors = {
   sideProjectTechStack: { _errors: [] },
   sideProjectTopic: { _errors: [] },
 }
+
+export const updateUserInfoFormErrors = {
+  _errors: [],
+  firstName: { _errors: [] },
+  lastName: { _errors: [] },
+  imageSrc: { _errors: [] },
+  description: { _errors: [] },
+  handler: { _errors: [] },
+}

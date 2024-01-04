@@ -12,13 +12,14 @@ import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import { revalidatePath } from "next/cache"
 import { getSideProjects } from "../supabaseRequests"
-import { auth, currentUser, SignOutButton, UserButton } from "@clerk/nextjs"
+import { currentUser, SignOutButton, UserButton } from "@clerk/nextjs"
+import { getUserId, getUserToken } from "@/lib/authUtils"
 
 export default async function Showcase() {
   revalidatePath('/')
-  const { userId, getToken } = auth();
+  const userId = getUserId();
+  const token = await getUserToken();
   // const user = await currentUser();
-  const token = await getToken({ template: 'supabase' });
   const { data: sideProjectsData, error } = await getSideProjects({ userId, token })
 
   // await clerkClient.users.updateUser(userId as string, { unsafeMetadata: { description: 'test' } });
