@@ -4,10 +4,9 @@ import { redirect } from 'next/navigation'
 import { CreateProjectState } from '@/types'
 import { sideProjectSchema } from '@/zodSchemas/formSchemas'
 import { getUserId, getUserToken } from '@/lib/authUtils'
-import { addSideProject } from '../supabaseRequests'
+import { addSideProject, updateSideProject } from '../supabaseRequests'
 
-export async function createProject(prevState: CreateProjectState, formData: FormData) {
-
+export async function createProject(type: string, handler: string, sideProjectId: string, handlerId: string, prevState: CreateProjectState, formData: FormData) {
   const parse = sideProjectSchema.safeParse({
     sideProjectName: formData.get('sideProjectName'),
     sideProjectLogoUrl: formData.get('sideProjectLogoUrl'),
@@ -28,14 +27,15 @@ export async function createProject(prevState: CreateProjectState, formData: For
   try {
     const userId = getUserId();
     const token = await getUserToken();
-    const { data: response, error } = await addSideProject({ userId, token, sideProject: data });
+    const { data: response, error } = type === 'add' ? await addSideProject({ userId, token, sideProject: data, handlerId }) : await updateSideProject({ userId, token, sideProject: data, sideProjectId });
     if (error) throw error;
   } catch (e) {
     databaseSuccess = false;
   } finally {
     if (databaseSuccess) {
-      revalidatePath('/')
-      redirect('/');
+      revalidatePath('/dashboard/admin');
+      revalidatePath(`/${handler}`);
+      redirect('/dashboard/admin');
     }
     return { message: 'An error occured, please try again.', errors: prevState.errors, dbError: 'An error occured, please try again.' }
   }

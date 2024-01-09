@@ -1,5 +1,4 @@
-import { authMiddleware, currentUser, redirectToSignIn } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 // This example protects all routes including api/trpc routes

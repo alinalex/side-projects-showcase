@@ -10,21 +10,19 @@ import {
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
-import { revalidatePath } from "next/cache"
 import { getSideProjects } from "../supabaseRequests"
 import { currentUser, SignOutButton, UserButton } from "@clerk/nextjs"
 import { getUserId, getUserToken } from "@/lib/authUtils"
 
 export default async function Showcase() {
-  revalidatePath('/')
   const userId = getUserId();
   const token = await getUserToken();
   // const user = await currentUser();
   const { data: sideProjectsData, error } = await getSideProjects({ userId, token })
 
   // await clerkClient.users.updateUser(userId as string, { unsafeMetadata: { description: 'test' } });
-  console.log('data', sideProjectsData);
-  console.log('error', error);
+  // console.log('data', sideProjectsData);
+  // console.log('error', error);
 
   return (
     <>

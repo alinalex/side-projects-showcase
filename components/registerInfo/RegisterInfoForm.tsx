@@ -17,7 +17,6 @@ const initialState: UserInfoState = {
 export default function RegisterInfoForm({ user }: { user: UserInfo }) {
   const [state, formAction] = useFormState(updateUserInfo, initialState);
   const { firstName, lastName, imageSrc, description, handler } = user;
-  // to do: check if handler already in use when updated
   return (
     <form action={formAction}>
       <FormTextItem label="Enter your first name" placeholder="your first name" id="firstName" name="firstName" errors={state?.errors?.firstName?._errors || []} className="form-item" maxLength={20} value={firstName} />

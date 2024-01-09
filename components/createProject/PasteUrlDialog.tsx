@@ -47,7 +47,7 @@ export default function PasteUrlDialog({ url, saveChanges }: { url: string, save
   async function checkIfImageExists(imageUrl: string) {
     let response = { status: false };
     if (!getHostname(imageUrl)) return response;
-    if (!isImage(imageUrl)) return response;
+    // if (!isImage(imageUrl)) return response;
     const doesImageLoad = await checkImage(imageUrl);
     return doesImageLoad;
   }

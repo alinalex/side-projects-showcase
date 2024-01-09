@@ -13,6 +13,7 @@ export default async function Home() {
         <div>side projects showcase</div>
         <div>
           <SignedIn>
+            <Link href='/dashboard/admin' className="p-4">Go to Dashboard</Link>
             <SignOutButton />
           </SignedIn>
           <SignedOut>
