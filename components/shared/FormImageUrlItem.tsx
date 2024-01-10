@@ -19,7 +19,7 @@ export default function FormImageUrlItem({ label, placeholder, id, name, errors,
       <div className="flex items-center pt-4">
         <div className="mr-8 w-[80px] h-[80px] relative">
           {imageUrl.length === 0 ? <div className="w-full h-full border-2 border-dashed rounded-[4px] border-[#d9e1ec]" /> :
-            <div className="logoWrapper"><img src={imageUrl} alt="logo" className="w-full h-full" /><XCircle className="absolute -top-3 -right-3 cursor-pointer" onClick={(e) => setImageUrl('')} /></div>}
+            <div className="logoWrapper h-full"><img src={imageUrl} alt="logo" className="w-full h-full" /><XCircle className="absolute -top-3 -right-3 cursor-pointer" onClick={(e) => setImageUrl('')} /></div>}
         </div>
         <PasteUrlDialog url={imageUrl} saveChanges={(url) => setImageUrl(url)} />
         <Input type="hidden" placeholder={placeholder} id={id} name={name} value={imageUrl} />

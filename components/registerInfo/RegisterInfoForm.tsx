@@ -27,7 +27,7 @@ export default function RegisterInfoForm({ user }: { user: UserInfo }) {
 
       <FormTextItem label="Enter your description" placeholder="your description" id="description" name="description" errors={state?.errors?.description?._errors || []} className="form-item" maxLength={60} value={description} />
 
-      <FormTextItem label="Enter your handler" placeholder="your handler" id="handler" name="handler" errors={state?.errors?.handler?._errors || []} className="form-item" maxLength={20} value={handler} />
+      <FormTextItem label="Enter your handler" placeholder="your handler, ex:johndoe" id="handler" name="handler" errors={state?.errors?.handler?._errors || []} className="form-item" maxLength={20} value={handler} />
 
       <div className="flex items-center">
         <SubmitButton title={'Update your info'} />

@@ -14,9 +14,9 @@ export async function getUserToken() {
 
 export async function formatUserData({ user }: { user: any }) {
   const userData = {
-    firstName: user.firstName as string,
-    lastName: user.lastName as string,
-    imageSrc: user.imageUrl as string,
+    firstName: user.firstName === null ? '' : user.firstName,
+    lastName: user.lastName === null ? '' : user.lastName,
+    imageSrc: user.imageUrl === null ? '' : user.imageUrl,
     description: (user.unsafeMetadata?.description as string) || '',
     handler: '',
   }

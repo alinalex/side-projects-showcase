@@ -36,7 +36,7 @@ async function updateUserProfileImage({ userId, data }: { userId: string, data: 
 async function updateUserHandler({ userId, data, token }: { userId: string, data: UserInfo, token: string }) {
   let error, res = null;
   try {
-    const userData = await updateHandler({ userId, token, handler: data.handler });
+    const userData = await updateHandler({ userId, token, handler: data.handler.toLocaleLowerCase() });
     res = userData.data;
     error = userData.error;
   } catch (err) {
@@ -58,7 +58,13 @@ export async function updateUserInfo(prevState: UserInfoState, formData: FormDat
     return { message: 'Failed to create side-project', errors: parse.error.format(), dbError: prevState.dbError }
   }
 
+
   const data = parse.data;
+  // check for handler regex
+  const isRegexValid = /^[a-z]+$/.test(data.handler);
+  if (!isRegexValid) {
+    return { message: 'Handler shouldn\'t contain blank spaces, numbers, uppercase letters or special characters.', errors: prevState.errors, dbError: 'handler shouldn\'t contain blank spaces, numbers, uppercase letters or special characters.' }
+  }
   let databaseSuccess = true;
   const userId = getUserId() as string;
   const user = await clerkClient.users.getUser(userId);
