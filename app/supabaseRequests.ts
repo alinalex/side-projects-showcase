@@ -1,4 +1,4 @@
-import { SideProject } from "@/types";
+import type { SideProject, SideProjectDBRow } from "@/types";
 import supabaseClient from "./supabase";
 
 export async function getSideProjects({ userId, token }: { userId: string | null | undefined, token: string | null }) {
@@ -6,16 +6,27 @@ export async function getSideProjects({ userId, token }: { userId: string | null
   const { data, error } = await supabase.from('side-projects')
     .select('*')
     .eq("user_id", userId);
-  return { data, error };
+  const sideProjectsData = data as SideProjectDBRow[];
+  return { data: sideProjectsData, error };
 }
 
-export async function getSideProject({ userId, token, urlId }: { userId: string | null | undefined, token: string | null, urlId: string }) {
+export async function getSideProjectById({ userId, token, urlId }: { userId: string | null | undefined, token: string | null, urlId: string }) {
   const supabase = await supabaseClient(token);
   const { data, error } = await supabase.from('side-projects')
     .select('*')
     .eq("user_id", userId)
     .eq("url_id", urlId);
+  return { data, error }
+}
 
+export async function getSideProjectItem({ userId, token, urlId }: { userId: string | null | undefined, token: string | null, urlId: string }) {
+  const { data, error } = await getSideProjectById({ userId, token, urlId });
+  const sideProjectData = data as SideProjectDBRow[];
+  return { data: sideProjectData, error };
+}
+
+export async function getSideProject({ userId, token, urlId }: { userId: string | null | undefined, token: string | null, urlId: string }) {
+  const { data, error } = await getSideProjectById({ userId, token, urlId });
   let sideProjectData: SideProject[] = [];
   if (data !== null) {
     sideProjectData.push({
@@ -115,4 +126,14 @@ export async function updateSideProject({ userId, token, sideProject, sideProjec
     .eq('url_id', sideProjectId);
 
   return { data, error };
+}
+
+export async function deleteSideProject({ userId, token, sideProjectId }: { userId: string | null | undefined, token: string | null, sideProjectId: string }) {
+  const supabase = await supabaseClient(token);
+  const { error } = await supabase
+    .from('side-projects')
+    .delete()
+    .eq('user_id', userId)
+    .eq('url_id', sideProjectId);
+  return { data: [], error }
 }

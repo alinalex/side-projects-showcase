@@ -3,6 +3,7 @@ import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs';
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   // todo: complete metadata for seo
@@ -27,6 +28,7 @@ export default function RootLayout({
           <main>
             {children}
           </main>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

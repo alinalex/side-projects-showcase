@@ -16,3 +16,19 @@ export type SideProject = {
   sideProjectTechStack: string;
   sideProjectTopic: string;
 }
+
+export type SideProjectDBRow = {
+  id: number;
+  created_at: string;
+  name: string;
+  productUrl: string;
+  logoUrl: string;
+  description: string;
+  tagline: string;
+  repoUrl: string;
+  techStack: string[];
+  topics: string[],
+  user_id: string;
+  handler_id: number,
+  url_id: string;
+}
