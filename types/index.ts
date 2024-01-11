@@ -1,4 +1,4 @@
-import type { CreateProjectState, SideProject, SideProjectDBRow } from "./createProject";
+import type { CreateProjectState, SideProject, SideProjectDBRow, UserDataDb } from "./createProject";
 import type { UserInfo, UserInfoState } from "./userInfo";
 
 export {
@@ -6,5 +6,6 @@ export {
   SideProject,
   UserInfo,
   UserInfoState,
-  SideProjectDBRow
+  SideProjectDBRow,
+  UserDataDb,
 }

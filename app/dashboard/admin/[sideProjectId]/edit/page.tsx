@@ -1,17 +1,20 @@
 import { getSideProject } from "@/app/supabaseRequests";
 import ProjectForm from "@/components/createProject/ProjectForm";
-import { getUserHandler, getUserId, getUserToken } from "@/lib/authUtils";
+import { getUserData, getUserId, getUserToken } from "@/lib/authUtils";
 import { redirect } from "next/navigation";
 
 export default async function EditProject({ params }: { params: { sideProjectId: string } }) {
-  const { handler, handlerId } = await getUserHandler();
-  if (!handler.length) {
+  const userId = getUserId() as string;
+  const { userData } = await getUserData({ userId });
+  if (!userData.length) {
     redirect('/');
   }
 
+  const handler = userData[0].handler;
+  const handlerId = userData[0].id.toString();
+
   // get side project data
   const sideProjectId = params.sideProjectId;
-  const userId = getUserId();
   const token = await getUserToken();
   const { data: sideProjectDataArray, error } = await getSideProject({ urlId: sideProjectId, userId, token });
   if (error || sideProjectDataArray === null) redirect('/dashboard/admin');

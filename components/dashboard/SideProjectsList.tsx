@@ -14,7 +14,7 @@ export default function SideProjectsList({ sideProjectsData, handler, userId, to
 
   // delete project
   async function handleDeleteSideProject({ sideProjectId }: { sideProjectId: string }) {
-    const { response } = await deleteProject({ userId, token, sideProjectId });
+    const { response } = await deleteProject({ userId, token, sideProjectId, handler });
     setShouldClose(true);
     if (!response) setShowToast(true);
   }
@@ -23,7 +23,7 @@ export default function SideProjectsList({ sideProjectsData, handler, userId, to
     <>
       <div>
         {sideProjectsData?.map(elem => (
-          <div key={elem.id} className="flex justify-between items-center">
+          <div key={elem.id} className="flex justify-between items-center mb-6">
             <p>{elem.name}</p>
             <div className="flex items-center">
               <Button asChild className="mr-2">

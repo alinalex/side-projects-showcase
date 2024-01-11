@@ -1,9 +1,9 @@
 import { getSideProjects } from "@/app/supabaseRequests";
 import SideProjectsList from "@/components/dashboard/SideProjectsList";
 import { Button } from "@/components/ui/button";
-import { getUserHandler, getUserToken } from "@/lib/authUtils";
+import { getUserData, getUserToken } from "@/lib/authUtils";
 import checkUserInfo from "@/lib/checkUserInfo";
-import { UserButton, currentUser } from "@clerk/nextjs";
+import { SignOutButton, currentUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -17,14 +17,18 @@ export default async function Dashboard() {
   if (!user) redirect('/');
 
   // check if user has info data, if not direct to register info page
-  const { handler } = await getUserHandler();
-  if (!handler.length) {
+  const { userData } = await getUserData({ userId: user?.id });
+  if (!userData.length) {
     redirectToRegisterInfo();
   }
-  const hasUserInfo = checkUserInfo({ user });
+
+  // check if user has complete data, if not direct to register info page
+  const hasUserInfo = checkUserInfo({ user: userData[0] });
   if (!hasUserInfo) {
     redirectToRegisterInfo();
   }
+
+  const handler = userData[0].handler;
 
   // get projects
   const token = await getUserToken();
@@ -38,7 +42,7 @@ export default async function Dashboard() {
           <Button asChild className="mr-4">
             <Link href={`/${handler}`} target="_blank">View Portfolio</Link>
           </Button>
-          <UserButton />
+          <SignOutButton />
         </div>
       </div>
       <div className="mt-6">

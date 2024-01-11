@@ -1,27 +1,30 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
-import { getSideProjects } from "../supabaseRequests"
-import { currentUser, SignedIn, UserButton } from "@clerk/nextjs"
-import { getUserId, getUserToken } from "@/lib/authUtils"
+import { getSideProjects, getUserDataFromDB } from "../supabaseRequests"
+import { SignedIn, SignOutButton } from "@clerk/nextjs"
 import SideProjectCard from "@/components/createProject/SideProjectCard"
+import { redirect } from "next/navigation";
 
 export default async function Showcase({ params }: { params: { handler: string } }) {
-  const userId = getUserId();
-  const token = await getUserToken();
-  const user = await currentUser();
-  const name = user?.firstName + ' ' + user?.lastName;
-  const avatarFallback = (user?.firstName?.charAt(0).toUpperCase() || '') + (user?.lastName?.charAt(0).toUpperCase() || '');
-  const description = user?.unsafeMetadata.description as string;
-  const { data: sideProjectsData, error } = await getSideProjects({ userId, token });
-  const profileImage = user?.imageUrl;
   const handler = params.handler;
+  const { data: userData, error: userDataError } = await getUserDataFromDB({ column: "handler", columnValue: handler });
+  if (userDataError || (userData && !userData.length)) {
+    redirect('/')
+  }
+
+  const user = userData[0];
+  const name = user?.first_name + ' ' + user?.last_name;
+  const avatarFallback = (user?.first_name?.charAt(0).toUpperCase() || '') + (user?.last_name?.charAt(0).toUpperCase() || '');
+  const description = user?.description;
+  const { data: sideProjectsData, error } = await getSideProjects({ userId: user.user_id });
+  const profileImage = user?.profileImageUrl;
 
   return (
     <>
       <SignedIn>
         <div className="flex justify-between items-center">
           <Link href='/dashboard/admin'>Go to dashboard</Link>
-          <UserButton afterSignOutUrl="/" />
+          <SignOutButton />
         </div>
       </SignedIn>
       <section className="flex flex-col items-center">

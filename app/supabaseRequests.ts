@@ -1,11 +1,12 @@
-import type { SideProject, SideProjectDBRow } from "@/types";
+import type { SideProject, SideProjectDBRow, UserDataDb } from "@/types";
 import supabaseClient from "./supabase";
 
-export async function getSideProjects({ userId, token }: { userId: string | null | undefined, token: string | null }) {
+export async function getSideProjects({ userId, token = null }: { userId: string | null | undefined, token?: string | null }) {
   const supabase = await supabaseClient(token);
   const { data, error } = await supabase.from('side-projects')
     .select('*')
-    .eq("user_id", userId);
+    .eq("user_id", userId)
+    .order("id", { ascending: false });
   const sideProjectsData = data as SideProjectDBRow[];
   return { data: sideProjectsData, error };
 }
@@ -19,7 +20,7 @@ export async function getSideProjectById({ userId, token, urlId }: { userId: str
   return { data, error }
 }
 
-export async function getSideProjectItem({ userId, token, urlId }: { userId: string | null | undefined, token: string | null, urlId: string }) {
+export async function getSideProjectItem({ userId, token = null, urlId }: { userId: string | null | undefined, token?: string | null, urlId: string }) {
   const { data, error } = await getSideProjectById({ userId, token, urlId });
   const sideProjectData = data as SideProjectDBRow[];
   return { data: sideProjectData, error };
@@ -43,13 +44,13 @@ export async function getSideProject({ userId, token, urlId }: { userId: string 
   return { data: sideProjectData, error };
 }
 
-export async function getHandler({ userId, token }: { userId: string | null | undefined, token: string | null }) {
+export async function getUserDataFromDB({ token = null, column, columnValue }: { token?: string | null, column: string, columnValue: string }) {
   const supabase = await supabaseClient(token);
   const { data, error } = await supabase.from('handlers')
     .select('*')
-    .eq("user_id", userId);
-  const handlerData = data as { handler: string, user_id: string, id: string }[] | null;
-  return { data: handlerData, error };
+    .eq(column, columnValue);
+  const userData = data as UserDataDb[];
+  return { data: userData, error };
 }
 
 export async function addSideProject({ userId, token, sideProject, handlerId }: { userId: string | null | undefined, token: string | null, sideProject: SideProject, handlerId: string }) {
@@ -73,10 +74,18 @@ export async function addSideProject({ userId, token, sideProject, handlerId }: 
   return { data, error };
 }
 
-export async function updateHandler({ userId, token, handler }: { userId: string | null | undefined, token: string | null, handler: string }) {
+export async function updateUserData({ userId, token, userData }: {
+  userId: string, token: string | null, userData: {
+    firstName: string;
+    lastName: string;
+    imageSrc: string;
+    description: string;
+    handler: string;
+  }
+}) {
 
   // check if handler exists for this user
-  const { data: userHandlerData, error: userHandlerError } = await getHandler({ userId, token });
+  const { data: userHandlerData, error: userHandlerError } = await getUserDataFromDB({ column: "user_id", columnValue: userId, token });
   if (userHandlerError) return { data: null, error: userHandlerError };
 
   const supabase = await supabaseClient(token);
@@ -84,7 +93,7 @@ export async function updateHandler({ userId, token, handler }: { userId: string
   if (userHandlerData && userHandlerData?.length > 0) {
     const updateRes = await supabase
       .from('handlers')
-      .update({ handler })
+      .update({ "handler": userData.handler, "first_name": userData.firstName, "last_name": userData.lastName, "description": userData.description, "profileImageUrl": userData.imageSrc })
       .eq('user_id', userId);
     updateHandlerData = updateRes.data;
     updateHandlerError = updateRes.error;
@@ -92,7 +101,7 @@ export async function updateHandler({ userId, token, handler }: { userId: string
     const insertRes = await supabase
       .from('handlers')
       .insert([
-        { handler, user_id: userId },
+        { "handler": userData.handler, "first_name": userData.firstName, "last_name": userData.lastName, "description": userData.description, "profileImageUrl": userData.imageSrc, user_id: userId },
       ])
     updateHandlerData = insertRes.data;
     updateHandlerError = insertRes.error;

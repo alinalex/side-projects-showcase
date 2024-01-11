@@ -8,7 +8,7 @@ export default async function RegisterInfo() {
   const user = await currentUser();
   if (!user) redirect('/');
 
-  const userData = await formatUserData({ user });
+  const userData = await formatUserData({ userId: user?.id });
 
   return (
     <section className="max-w-xl">

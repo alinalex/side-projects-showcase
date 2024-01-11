@@ -1,4 +1,4 @@
-import { getHandler } from "@/app/supabaseRequests";
+import { getUserDataFromDB } from "@/app/supabaseRequests";
 import { auth } from "@clerk/nextjs"
 
 export function getUserId() {
@@ -12,34 +12,36 @@ export async function getUserToken() {
   return token;
 }
 
-export async function formatUserData({ user }: { user: any }) {
-  const userData = {
-    firstName: user.firstName === null ? '' : user.firstName,
-    lastName: user.lastName === null ? '' : user.lastName,
-    imageSrc: user.imageUrl === null ? '' : user.imageUrl,
-    description: (user.unsafeMetadata?.description as string) || '',
+export async function formatUserData({ userId }: { userId: string }) {
+  const userDataResponse = {
+    firstName: '',
+    lastName: '',
+    imageSrc: '',
+    description: '',
     handler: '',
   }
 
-  const userId = getUserId();
   const token = await getUserToken();
-  const { data: handlerData, error } = await getHandler({ userId, token });
-  if (!error && handlerData && handlerData?.length > 0) {
-    userData.handler = handlerData[0].handler;
+  const { data: userData, error } = await getUserDataFromDB({ columnValue: userId, token, column: "user_id" });
+
+  if (!error && userData && userData?.length > 0) {
+    userDataResponse.firstName = userData[0].first_name;
+    userDataResponse.lastName = userData[0].last_name;
+    userDataResponse.imageSrc = userData[0].profileImageUrl;
+    userDataResponse.description = userData[0].description;
+    userDataResponse.handler = userData[0].handler;
   }
 
-  return userData;
+  return userDataResponse;
 }
 
-export async function getUserHandler() {
-  const userId = getUserId();
+export async function getUserData({ userId }: { userId: string }) {
   const token = await getUserToken();
-  const { data: handlerData, error } = await getHandler({ userId, token });
-  if (error || (handlerData && !handlerData.length)) {
-    return { handler: '', handlerId: '' };
+  const { data: userData, error } = await getUserDataFromDB({ column: "user_id", columnValue: userId, token });
+  if (error || (userData && !userData.length)) {
+    return { userData: [] };
   }
   return {
-    handler: handlerData !== null && handlerData[0].handler || '',
-    handlerId: handlerData !== null && handlerData[0].id || ''
+    userData
   }
 }

@@ -32,3 +32,14 @@ export type SideProjectDBRow = {
   handler_id: number,
   url_id: string;
 }
+
+export type UserDataDb = {
+  id: number;
+  created_at: string;
+  user_id: string;
+  handler: string;
+  first_name: string;
+  last_name: string;
+  description: string;
+  profileImageUrl: string;
+}
