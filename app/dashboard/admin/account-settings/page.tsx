@@ -11,9 +11,13 @@ export default async function RegisterInfo() {
   const userData = await formatUserData({ userId: user?.id });
 
   return (
-    <section className="max-w-xl">
-      <div className="mb-4">Edit your info</div>
-      <RegisterInfoForm user={userData} />
+    <section className="flex justify-center">
+      <div className="w-full max-w-2xl rounded-[48px] bg-white p-10 flex justify-center">
+        <div className="w-full">
+          <div className="form-title">Account Settings</div>
+          <RegisterInfoForm user={userData} />
+        </div>
+      </div>
     </section>
   )
 }

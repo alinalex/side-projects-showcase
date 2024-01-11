@@ -21,11 +21,11 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning={true} className={cx(
-        "text-black bg-white dark:text-white dark:bg-[#111010]",
+        "text-content bg-app-bg w-full h-full",
         GeistSans.variable,
         GeistMono.variable)}>
-        <body className="p-4" suppressHydrationWarning={true}>
-          <main>
+        <body className="p-5 lg:p-4 w-full h-full" suppressHydrationWarning={true}>
+          <main className="w-full h-full">
             {children}
           </main>
           <Toaster />

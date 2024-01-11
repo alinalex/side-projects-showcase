@@ -17,3 +17,5 @@ export const updateUserInfoFormErrors = {
   description: { _errors: [] },
   handler: { _errors: [] },
 }
+
+export const formInputClass = "dark:bg-white bg-white dark:border-border-light border-border-light dark:ring-offset-[#8f96bd] ring-offset-[#8f96bd]";

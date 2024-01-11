@@ -15,6 +15,12 @@ const config: Config = {
       },
     },
     extend: {
+      colors: {
+        "app-bg": "#f9f9fb",
+        "title": "#29363d",
+        "content": "#656b8a",
+        "border-light": "#e8eaed",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

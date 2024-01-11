@@ -3,6 +3,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import FormFieldItemError from "./FormFieldItemError"
 import { ChangeEvent, useState } from "react"
+import { formInputClass } from "@/constants"
 
 export default function FormTextItem({ type = 'input', label, placeholder, id, name, errors, className, maxLength = 0, value = '' }: { label: string, placeholder: string, id: string, name: string, errors: string[], className: string, maxLength?: number, value?: string, type?: 'input' | 'textarea' }) {
   const [shouldShowError, setShouldShowError] = useState(true);
@@ -21,7 +22,7 @@ export default function FormTextItem({ type = 'input', label, placeholder, id, n
         {hasMaxLength && <p className="text-sm">{currentLength}/{maxLength}</p>}
       </div>
       {
-        type === 'input' ? <Input type="text" autoComplete="off" placeholder={placeholder} id={id} name={name} onChange={handleOnChange} defaultValue={value} maxLength={hasMaxLength ? maxLength : undefined} /> : <Textarea placeholder={placeholder} id={id} name={name} onChange={handleOnChange} defaultValue={value} maxLength={hasMaxLength ? maxLength : undefined} rows={4} autoComplete="off" />
+        type === 'input' ? <Input className={formInputClass} type="text" autoComplete="off" placeholder={placeholder} id={id} name={name} onChange={handleOnChange} defaultValue={value} maxLength={hasMaxLength ? maxLength : undefined} /> : <Textarea className={formInputClass} placeholder={placeholder} id={id} name={name} onChange={handleOnChange} defaultValue={value} maxLength={hasMaxLength ? maxLength : undefined} rows={4} autoComplete="off" />
       }
       {shouldShowError && <FormFieldItemError errors={errors} />}
     </div >
