@@ -4,6 +4,7 @@ import FormFieldItemError from "./FormFieldItemError"
 import { Button } from "../ui/button"
 import { XCircle } from "lucide-react"
 import { useEffect, useState } from "react"
+import { formInputClass } from "@/constants"
 
 export default function FormAddOptions({ label, placeholder, id, name, errors, className, btnTitle, initialOptions = [] }: { label: string, placeholder: string, id: string, name: string, errors: string[], className: string, btnTitle: string, initialOptions?: string[] }) {
   const [shouldShowError, setShouldShowError] = useState(true);
@@ -28,8 +29,8 @@ export default function FormAddOptions({ label, placeholder, id, name, errors, c
     <div className={`${className}`}>
       <Label htmlFor={name}>{label}</Label>
       <div className="flex items-center">
-        <Input type="text" placeholder={placeholder} value={optionsInputValue} onChange={(e) => setOptionsInputValue(e.target.value)} />
-        <Button disabled={!optionsInputValue.length} className="ml-4" onClick={addOption}>{btnTitle}</Button>
+        <Input type="text" placeholder={placeholder} value={optionsInputValue} onChange={(e) => setOptionsInputValue(e.target.value)} className={formInputClass} />
+        <Button disabled={!optionsInputValue.length} className="ml-4" onClick={addOption} variant={'secondary'}>{btnTitle}</Button>
       </div>
       <div className="flex items-center">
         {optionsArray.map((option, index) => (

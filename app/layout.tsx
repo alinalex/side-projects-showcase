@@ -24,7 +24,7 @@ export default function RootLayout({
         "text-content bg-app-bg w-full h-full",
         GeistSans.variable,
         GeistMono.variable)}>
-        <body className="p-5 lg:p-4 w-full h-full" suppressHydrationWarning={true}>
+        <body className="p-5 lg:p-4 w-full min-h-full" suppressHydrationWarning={true}>
           <main className="w-full h-full">
             {children}
           </main>

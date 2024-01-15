@@ -1,5 +1,6 @@
 import { getSideProject } from "@/app/supabaseRequests";
 import ProjectForm from "@/components/createProject/ProjectForm";
+import FormShell from "@/components/shared/FormShell";
 import { getUserData, getUserId, getUserToken } from "@/lib/authUtils";
 import { redirect } from "next/navigation";
 
@@ -21,9 +22,9 @@ export default async function EditProject({ params }: { params: { sideProjectId:
   const sideProjectData = sideProjectDataArray && sideProjectDataArray[0];
 
   return (
-    <div className="max-w-xl">
-      <div className="mb-4">Edit your side project</div>
+    <FormShell>
+      <div className="form-title">Edit your side project</div>
       <ProjectForm type="edit" handler={handler} sideProjectId={sideProjectId} handlerId={handlerId} sideProjectData={sideProjectData} />
-    </div>
+    </FormShell>
   )
 }

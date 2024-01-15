@@ -26,10 +26,10 @@ export default function SideProjectsList({ sideProjectsData, handler, userId, to
           <div key={elem.id} className="flex justify-between items-center mb-6">
             <p>{elem.name}</p>
             <div className="flex items-center">
-              <Button asChild className="mr-2">
+              <Button asChild className="mr-2" variant={'link'}>
                 <Link href={`/${handler}/${elem.url_id}`} target="_blank">View Project</Link>
               </Button>
-              <Button asChild className="mr-2">
+              <Button asChild className="mr-2" variant={'secondary'}>
                 <Link href={`/dashboard/admin/${elem.url_id}/edit`}>Edit Project</Link>
               </Button>
               <PopupDialogWrapper shouldClose={shouldClose} btnText="Delete Project" itemName="side-project" sideProjectId={elem.url_id} handleDeleteSideProject={handleDeleteSideProject} />

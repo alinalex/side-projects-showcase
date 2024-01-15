@@ -14,9 +14,9 @@ export default function PopupDialog({ btnText, itemName, open, setOpen, handleCa
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">{btnText}</Button>
+        <Button variant="destructive">{btnText}</Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="bg-white dark:bg-white">
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
@@ -25,7 +25,7 @@ export default function PopupDialog({ btnText, itemName, open, setOpen, handleCa
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <Button onClick={handleCancel}>Cancel</Button>
+          <Button onClick={handleCancel} variant={'ghost'}>Cancel</Button>
           <Button variant="destructive" onClick={handleContinue} disabled={inProgress}>{inProgress ? <>Deleting...<Loader2 className="ml-2 h-4 w-4 animate-spin" /></> : 'Continue'}</Button>
         </AlertDialogFooter>
       </AlertDialogContent>

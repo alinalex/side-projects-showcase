@@ -9,7 +9,3 @@
 .form-title {
   @apply mb-5 text-title text-[24px] leading-[120%] font-medium
 }
-
-.form-input {
-  @apply dark:bg-white bg-white dark:border-border-light border-border-light dark:ring-offset-[#8f96bd] ring-offset-[#8f96bd]
-}

@@ -7,7 +7,7 @@ export default function SubmitButton({ disabled = false, title }: { disabled?: b
   const { pending } = useFormStatus()
 
   return (
-    <Button type="submit" aria-disabled={pending} disabled={disabled || pending}>
+    <Button type="submit" variant="default" aria-disabled={pending} disabled={disabled || pending}>
       {pending ? <>Saving...<Loader2 className="ml-2 h-4 w-4 animate-spin" /></> : title}
     </Button>
   )

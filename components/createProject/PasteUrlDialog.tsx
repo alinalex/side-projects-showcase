@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useEffect, useState } from "react"
 import FormError from "@/components/shared/FormError"
+import { formInputClass } from "@/constants"
 
 export default function PasteUrlDialog({ url, saveChanges }: { url: string, saveChanges: (url: string) => void }) {
 
@@ -69,9 +70,9 @@ export default function PasteUrlDialog({ url, saveChanges }: { url: string, save
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Paste a URL</Button>
+        <Button variant="secondary" className="">Paste a URL</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-white dark:bg-white">
         <DialogHeader>
           <DialogTitle>Paste URL</DialogTitle>
         </DialogHeader>
@@ -82,7 +83,7 @@ export default function PasteUrlDialog({ url, saveChanges }: { url: string, save
             </Label>
             <Input
               id="name"
-              className="col-span-3"
+              className={`col-span-3 ${formInputClass}`}
               value={innerUrlValue}
               onChange={(e) => { setInnerUrlValue(e.target.value); setUrlError(false); }}
             />

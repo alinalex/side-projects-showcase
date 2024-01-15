@@ -18,10 +18,10 @@ export default async function AdminLayout({
       <div className="flex justify-between items-center">
         <h1><Link href={'/dashboard/admin'}>Dashboard</Link></h1>
         <div className="flex items-center">
-          <Button asChild className="mr-4">
+          <Button asChild className="mr-4" variant={'link'}>
             <Link href={'/dashboard/admin/account-settings'}>Account Settings</Link>
           </Button>
-          <Button asChild className="mr-4">
+          <Button asChild className="mr-4" variant={'link'}>
             <Link href={`/${handler}`} target="_blank">View Portfolio</Link>
           </Button>
           <SignOutButton />

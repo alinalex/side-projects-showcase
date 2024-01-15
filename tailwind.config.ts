@@ -20,6 +20,11 @@ const config: Config = {
         "title": "#29363d",
         "content": "#656b8a",
         "border-light": "#e8eaed",
+        "green-btn": "#269684",
+        "purple-btn": "#6363f1",
+        "purple-btn-hover": "#7777f3",
+        "secondary-btn": "#0a2540",
+        "secondary-btn-hover": "#0a2540"
       },
       keyframes: {
         "accordion-down": {

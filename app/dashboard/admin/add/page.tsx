@@ -1,4 +1,5 @@
 import ProjectForm from "@/components/createProject/ProjectForm";
+import FormShell from "@/components/shared/FormShell";
 import { getUserData, getUserId } from "@/lib/authUtils";
 import { redirect } from "next/navigation";
 
@@ -12,9 +13,9 @@ export default async function AddProject() {
   const handler = userData[0].handler;
   const handlerId = userData[0].id.toString();
   return (
-    <div className="max-w-xl">
-      <div className="mb-4">Add your side project</div>
+    <FormShell>
+      <div className="form-title">Add your side project</div>
       <ProjectForm type="add" handler={handler} handlerId={handlerId} />
-    </div>
+    </FormShell>
   )
 }
