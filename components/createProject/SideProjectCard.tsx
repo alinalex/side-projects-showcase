@@ -14,31 +14,33 @@ import type { SideProjectDBRow } from "@/types";
 
 export default function SideProjectCard({ project, handler }: { project: SideProjectDBRow, handler: string }) {
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center group">
-          <Avatar>
-            <AvatarImage src={project.logoUrl} />
-            <AvatarFallback>{project.name?.slice(0, 2)?.toLocaleUpperCase()}</AvatarFallback>
-          </Avatar>
-          <CardTitle className="ml-2">{project.name}</CardTitle>
-          <Link href={project.productUrl} className="ml-4" target="_blank"><ArrowUpRight className="transform transition-transform duration-300 group-hover:-rotate-12" /></Link>
-        </div>
-        <CardDescription>{project.tagline}</CardDescription>
+    <Card className="bg-white dark:bg-white border-transparent dark:border-transparent shadow-lg">
+      <CardHeader className="pb-4">
+        <Link href={project.productUrl} className="w-fit" target="_blank">
+          <div className="flex items-center group">
+            <Avatar>
+              <AvatarImage src={project.logoUrl} />
+              <AvatarFallback>{project.name?.slice(0, 2)?.toLocaleUpperCase()}</AvatarFallback>
+            </Avatar>
+            <CardTitle className="ml-3 text-xl text-title">{project.name}</CardTitle>
+            <ArrowUpRight color="#269684" className="ml-3 transform transition-transform duration-300 group-hover:-rotate-12" />
+          </div>
+        </Link>
+        <CardDescription className="text-md text-content">{project.tagline}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="mb-2">
-          <p className="mb-2">Tech Stack:</p>
-          <div className="truncate" title={project.techStack?.join(', ')}>
-            {project.techStack?.map((stack: string, index: number) => (
-              <span key={index} className={`${index > 0 && 'ml-3'}`}>{stack}</span>
+      <CardContent className="pb-4">
+        <div className="mb-4">
+          <div>
+            {project.topics?.map((hashTag: string, index: number) => (
+              <span key={index} className={`text-content text-md ${index > 0 && 'ml-3'} italic`}>#{hashTag}</span>
             ))}
           </div>
         </div>
         <div>
-          <div>
-            {project.topics?.map((hashTag: string, index: number) => (
-              <span key={index} className={`${index > 0 && 'ml-3'} italic`}>#{hashTag}</span>
+          <p className="mb-2 text-content text-md font-medium">Tech Stack:</p>
+          <div className="truncate" title={project.techStack?.join(', ')}>
+            {project.techStack?.map((stack: string, index: number) => (
+              <span key={index} className={`text-content text-md ${index > 0 && 'ml-3'}`}>{stack}</span>
             ))}
           </div>
         </div>

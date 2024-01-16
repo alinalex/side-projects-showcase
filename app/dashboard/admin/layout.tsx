@@ -15,16 +15,18 @@ export default async function AdminLayout({
   const handler = userData[0].handler;
   return (
     <section className="w-full h-full">
-      <div className="flex justify-between items-center">
-        <h1><Link href={'/dashboard/admin'}>Dashboard</Link></h1>
-        <div className="flex items-center">
-          <Button asChild className="mr-4" variant={'link'}>
-            <Link href={'/dashboard/admin/account-settings'}>Account Settings</Link>
-          </Button>
-          <Button asChild className="mr-4" variant={'link'}>
-            <Link href={`/${handler}`} target="_blank">View Portfolio</Link>
-          </Button>
-          <SignOutButton />
+      <div className="fixed px-5 lg:px-4 w-full top-4 left-0 z-50">
+        <div className="flex justify-between items-center px-3 border rounded-xl bg-app-bg">
+          <h1><Link href={'/dashboard/admin'}>Dashboard</Link></h1>
+          <div className="flex items-center">
+            <Button asChild className="mr-4" variant={'link'}>
+              <Link href={'/dashboard/admin/account-settings'}>Account Settings</Link>
+            </Button>
+            <Button asChild className="mr-4" variant={'link'}>
+              <Link href={`/${handler}`} target="_blank">View Portfolio</Link>
+            </Button>
+            <SignOutButton><Button variant={'link'}>Sign Out</Button></SignOutButton>
+          </div>
         </div>
       </div>
       {children}

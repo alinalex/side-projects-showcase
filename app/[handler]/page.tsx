@@ -4,6 +4,7 @@ import { getSideProjects, getUserDataFromDB } from "../supabaseRequests"
 import { SignedIn, SignOutButton } from "@clerk/nextjs"
 import SideProjectCard from "@/components/createProject/SideProjectCard"
 import { redirect } from "next/navigation";
+import { Button } from "@/components/ui/button"
 
 export default async function Showcase({ params }: { params: { handler: string } }) {
   const handler = params.handler;
@@ -23,17 +24,19 @@ export default async function Showcase({ params }: { params: { handler: string }
     <>
       <SignedIn>
         <div className="flex justify-between items-center">
-          <Link href='/dashboard/admin'>Go to dashboard</Link>
-          <SignOutButton />
+          <Button asChild variant={'link'}>
+            <Link href='/dashboard/admin'>Go to dashboard</Link>
+          </Button>
+          <SignOutButton><Button variant={'link'}>Sign Out</Button></SignOutButton>
         </div>
       </SignedIn>
       <section className="flex flex-col items-center">
-        <Avatar>
+        <Avatar className="h-16 w-16">
           <AvatarImage src={profileImage} />
           <AvatarFallback>{avatarFallback}</AvatarFallback>
         </Avatar>
-        <p className="text-lg mt-2">{name}</p>
-        <p className="text-lg mt-2">{description}</p>
+        <p className="text-xl font-medium mt-2 text-title">{name}</p>
+        <p className="text-md mt-2 max-w-xl text-content">{description}</p>
       </section>
       <section className="my-6 grid grid-cols-1 lg:grid-cols-2 gap-y-6 lg:gap-x-6 gap-x-0">
         {error ? <div>there was an error getting your side projects, please try again later.</div> : sideProjectsData?.map(project => (

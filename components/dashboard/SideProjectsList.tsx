@@ -23,8 +23,11 @@ export default function SideProjectsList({ sideProjectsData, handler, userId, to
     <>
       <div>
         {sideProjectsData?.map(elem => (
-          <div key={elem.id} className="flex justify-between items-center mb-6">
-            <p>{elem.name}</p>
+          <div key={elem.id} className="flex justify-between items-center py-3 px-2 hover:bg-purple-btn/10">
+            <div className="flex items-center">
+              <img src={elem.logoUrl} alt="side-project-logo" className="w-[48px] h-[48px] rounded mr-3" />
+              <p>{elem.name}</p>
+            </div>
             <div className="flex items-center">
               <Button asChild className="mr-2" variant={'link'}>
                 <Link href={`/${handler}/${elem.url_id}`} target="_blank">View Project</Link>

@@ -35,13 +35,16 @@ export default async function Dashboard() {
   const { data: sideProjectsData, error } = await getSideProjects({ userId: user.id, token });
 
   return (
-    <section>
-      <div className="mt-6">
+    <section className="mt-20">
+      <div className="mt-6 flex justify-between items-center px-2">
+        <div>
+          <h3 className="font-bold">Manage side-projects</h3>
+          <p className="text-sm">Create and manage side-projects.</p>
+        </div>
         <Button asChild><Link href="/dashboard/admin/add">Add Project</Link></Button>
       </div>
-      <div className="mt-6">
-        <SideProjectsList sideProjectsData={sideProjectsData} handler={handler} userId={user?.id} token={token as string} />
-      </div>
-    </section>
+      <div className="w-full h-px bg-slate-300 my-4"></div>
+      <SideProjectsList sideProjectsData={sideProjectsData} handler={handler} userId={user?.id} token={token as string} />
+    </section >
   )
 }
