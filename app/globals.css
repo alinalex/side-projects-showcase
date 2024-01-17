@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 .form-item {
-  @apply grid gap-1 mb-5;
+  @apply grid gap-2 mb-5;
 }
 
 .form-title {
-  @apply mb-5 text-title text-[24px] leading-[120%] font-medium
+  @apply mb-5 text-title text-[22px] sm:text-[24px] leading-[120%] font-medium
 }

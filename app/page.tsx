@@ -1,7 +1,6 @@
 import {
   SignedIn,
   SignedOut,
-  SignOutButton,
 } from "@clerk/nextjs";
 import Link from "next/link";
 
@@ -13,7 +12,6 @@ export default async function Home() {
         <div>
           <SignedIn>
             <Link href='/dashboard/admin' className="p-4">Go to Dashboard</Link>
-            <SignOutButton />
           </SignedIn>
           <SignedOut>
             <Link href='/sign-in' className="p-4">Sign In</Link>

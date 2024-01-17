@@ -14,7 +14,7 @@ export default function PopupDialog({ btnText, itemName, open, setOpen, handleCa
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">{btnText}</Button>
+        <Button variant="destructive" className="text-[12px] h-[35px] sm:text-sm md:h-10">{btnText}</Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-white dark:bg-white">
         <AlertDialogHeader>

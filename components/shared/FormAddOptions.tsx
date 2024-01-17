@@ -28,9 +28,9 @@ export default function FormAddOptions({ label, placeholder, id, name, errors, c
   return (
     <div className={`${className}`}>
       <Label htmlFor={name}>{label}</Label>
-      <div className="flex items-center">
+      <div className="flex flex-col sm:flex-row items-center">
         <Input type="text" placeholder={placeholder} value={optionsInputValue} onChange={(e) => setOptionsInputValue(e.target.value)} className={formInputClass} />
-        <Button disabled={!optionsInputValue.length} className="ml-4" onClick={addOption} variant={'secondary'}>{btnTitle}</Button>
+        <Button disabled={!optionsInputValue.length} className="mt-2 ml-0 sm:mt-0 sm:ml-4 w-full sm:w-fit" onClick={addOption} variant={'secondary'}>{btnTitle}</Button>
       </div>
       <div className="flex items-center">
         {optionsArray.map((option, index) => (

@@ -22,23 +22,15 @@ export default async function Showcase({ params }: { params: { handler: string }
 
   return (
     <>
-      <SignedIn>
-        <div className="flex justify-between items-center">
-          <Button asChild variant={'link'}>
-            <Link href='/dashboard/admin'>Go to dashboard</Link>
-          </Button>
-          <SignOutButton><Button variant={'link'}>Sign Out</Button></SignOutButton>
-        </div>
-      </SignedIn>
       <section className="flex flex-col items-center">
         <Avatar className="h-16 w-16">
           <AvatarImage src={profileImage} />
           <AvatarFallback>{avatarFallback}</AvatarFallback>
         </Avatar>
-        <p className="text-xl font-medium mt-2 text-title">{name}</p>
-        <p className="text-md mt-2 max-w-xl text-content">{description}</p>
+        <p className="text-lg md:text-xl font-medium mt-2 text-title">{name}</p>
+        <p className="text-sm md:text-base mt-2 max-w-xl text-content">{description}</p>
       </section>
-      <section className="my-6 grid grid-cols-1 lg:grid-cols-2 gap-y-6 lg:gap-x-6 gap-x-0">
+      <section className="my-6 grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-x-6 gap-x-0">
         {error ? <div>there was an error getting your side projects, please try again later.</div> : sideProjectsData?.map(project => (
           <SideProjectCard project={project} key={project.name} handler={handler} />
         ))}
