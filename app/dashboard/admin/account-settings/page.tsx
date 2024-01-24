@@ -7,7 +7,6 @@ import { currentUser } from "@clerk/nextjs";
 export default async function RegisterInfo() {
   const user = await currentUser();
   if (!user) return null;
-
   const userData = await formatUserData({ userId: user?.id });
 
   return (

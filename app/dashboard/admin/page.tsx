@@ -20,6 +20,7 @@ export default async function Dashboard() {
   const { userData } = await getUserData({ userId: user?.id });
   if (!userData.length) {
     redirectToRegisterInfo();
+    return null;
   }
 
   // check if user has complete data, if not direct to register info page

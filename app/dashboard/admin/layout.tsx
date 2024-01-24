@@ -11,8 +11,7 @@ export default async function AdminLayout({
   const userId = getUserId() as string;
   if (!userId) return null;
   const { userData } = await getUserData({ userId });
-  if (!userData.length) return null;
-  const handler = userData[0].handler;
+  const handler = userData.length > 0 ? userData[0].handler : '';
   return (
     <section className="w-full h-full">
       <div className="fixed px-4 w-full top-4 left-0 z-50">
@@ -22,9 +21,9 @@ export default async function AdminLayout({
             <Button asChild className="sm:mr-4 px-3 sm:px-4" variant={'link'}>
               <Link href={'/dashboard/admin/account-settings'}>Account Settings</Link>
             </Button>
-            <Button asChild className="sm:mr-4 px-3 sm:px-4" variant={'link'}>
+            {handler.length > 0 && <Button asChild className="sm:mr-4 px-3 sm:px-4" variant={'link'}>
               <Link href={`/${handler}`} target="_blank">View Portfolio</Link>
-            </Button>
+            </Button>}
             <SignOutButton><Button variant={'link'} className="px-3 sm:px-4">Sign Out</Button></SignOutButton>
           </div>
         </div>
