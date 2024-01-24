@@ -35,7 +35,7 @@ export default async function Home() {
           <div className="lg:mr-10 mb-10 lg:mb-0 lg:max-w-xl max-w-3xl">
             <h2 className="text-4xl mb-4 font-medium">Bring your side projects back to life</h2>
             <p className="text-lg">Exhibit your coding prowess and share your projects with the world.</p>
-            <p className="text-lg">Whether you're a seasoned developer or just starting your coding journey, Side Projects Showcase is the perfect stage for your creations.</p>
+            <p className="text-lg">Whether you are a seasoned developer or just starting your coding journey, Side Projects Showcase is the perfect stage for your creations.</p>
             <Button asChild className="mt-4">
               <Link href='/sign-up' className="p-4">Get Started</Link>
             </Button>
