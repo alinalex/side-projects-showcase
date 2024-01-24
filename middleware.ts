@@ -8,13 +8,13 @@ export default authMiddleware({
   publicRoutes: ['/', '/:handler', '/:handler/:sideProjectId'],
   async afterAuth(auth, req, evt) {
 
-    if (req.nextUrl.pathname === '/register' || req.nextUrl.pathname === '/dashboard') {
+    if (req.nextUrl.pathname === '/dashboard') {
       const home = new URL('/', req.nextUrl.origin);
       return NextResponse.redirect(home);
     }
 
     // Handle users who aren't authenticated
-    if (!auth.userId && !auth.isPublicRoute) {
+    if (!auth.userId && (!auth.isPublicRoute || req.nextUrl.pathname === '/dashboard/admin')) {
       return redirectToSignIn({ returnBackUrl: req.url });
     }
 

@@ -14,7 +14,7 @@ function redirectToRegisterInfo() {
 export default async function Dashboard() {
   // no user then redirect to lp page
   const user = await currentUser();
-  if (!user) redirect('/');
+  if (!user) return null;
 
   // check if user has info data, if not direct to register info page
   const { userData } = await getUserData({ userId: user?.id });

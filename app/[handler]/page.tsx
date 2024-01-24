@@ -1,10 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import Link from "next/link"
 import { getSideProjects, getUserDataFromDB } from "../supabaseRequests"
-import { SignedIn, SignOutButton } from "@clerk/nextjs"
 import SideProjectCard from "@/components/createProject/SideProjectCard"
 import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button"
 
 export default async function Showcase({ params }: { params: { handler: string } }) {
   const handler = params.handler;
