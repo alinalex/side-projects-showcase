@@ -32,9 +32,9 @@ export default function FormAddOptions({ label, placeholder, id, name, errors, c
         <Input type="text" placeholder={placeholder} value={optionsInputValue} onChange={(e) => setOptionsInputValue(e.target.value)} className={formInputClass} />
         <Button disabled={!optionsInputValue.length} className="mt-2 ml-0 sm:mt-0 sm:ml-4 w-full sm:w-fit" onClick={addOption} variant={'secondary'}>{btnTitle}</Button>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center overflow-scroll">
         {optionsArray.map((option, index) => (
-          <div key={`${option}${index}`} className="flex items-center mr-4 last:mr-0">
+          <div key={`${option}${index}`} className="flex items-center mr-[18px] last:mr-0">
             <div>{option}</div>
             <XCircle className="ml-2 cursor-pointer" onClick={(e) => deleteOption(option)} />
           </div>

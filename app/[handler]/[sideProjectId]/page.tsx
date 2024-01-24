@@ -20,7 +20,7 @@ export default async function SideProjectItem({ params }: { params: { sideProjec
   if (error || data === null || (Array.isArray(data) && data.length === 0)) redirect(`/${handler}`);
   const project = data[0];
   return (
-    <section className="max-w-3xl mx-auto mt-10">
+    <section className="max-w-3xl mx-auto mt-6">
       <Avatar className="w-20 h-20">
         <AvatarImage src={project.logoUrl} />
         <AvatarFallback>{project.name?.slice(0, 2)?.toLocaleUpperCase()}</AvatarFallback>
@@ -40,15 +40,19 @@ export default async function SideProjectItem({ params }: { params: { sideProjec
         </div>
       </div>
       <p className="text-base sm:text-lg text-content mb-3">{project.description}</p>
-      <div className="truncate" title={project.techStack?.join(', ')}>
-        {project.techStack?.map((stack: string, index: number) => (
-          <span key={index} className={`${index > 0 && 'ml-3'}`}>{stack}</span>
-        ))}
+      <div className="mb-4 border shadow-lg rounded-lg p-3">
+        <p className="font-medium text-lg mb-2">Tech stack</p>
+        <div className="grid md:grid-cols-6 grid-cols-3 gap-1">
+          {project.techStack?.map((stack: string, index: number) => (
+            <span key={index} className={`{}`}>{stack}</span>
+          ))}
+        </div>
       </div>
-      <div>
-        <div>
+      <div className="mb-4 border shadow-lg rounded-lg p-3">
+        <p className="font-medium text-lg mb-2">Topics</p>
+        <div className="grid md:grid-cols-6 grid-cols-3 gap-1">
           {project.topics?.map((hashTag: string, index: number) => (
-            <span key={index} className={`${index > 0 && 'ml-3'} italic`}>#{hashTag}</span>
+            <span key={index} className={`{}`}>#{hashTag}</span>
           ))}
         </div>
       </div>

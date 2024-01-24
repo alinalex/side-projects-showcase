@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   // todo: complete metadata for seo
-  title: 'side-projects.link',
+  title: 'Side Projects Showcase',
   description: 'Showcase your side-projects to the whole world.',
 }
 

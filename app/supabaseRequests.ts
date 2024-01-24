@@ -37,8 +37,8 @@ export async function getSideProject({ userId, token, urlId }: { userId: string 
       sideProjectDescription: data[0].description,
       sideProjectTagline: data[0].tagline,
       sideProjectCodeUrl: data[0].repoUrl,
-      sideProjectTechStack: data[0].techStack.join(''),
-      sideProjectTopic: data[0].topics.join(''),
+      sideProjectTechStack: data[0].techStack.join(', '),
+      sideProjectTopic: data[0].topics.join(', '),
     })
   }
   return { data: sideProjectData, error };

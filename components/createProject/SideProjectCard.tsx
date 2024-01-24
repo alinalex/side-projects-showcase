@@ -30,17 +30,17 @@ export default function SideProjectCard({ project, handler }: { project: SidePro
       </CardHeader>
       <CardContent className="pb-4">
         <div className="mb-4">
-          <div>
+          <div className="grid md:grid-cols-4 grid-cols-3 gap-1">
             {project.topics?.map((hashTag: string, index: number) => (
-              <span key={index} className={`text-content text-md ${index > 0 && 'ml-3'} italic`}>#{hashTag}</span>
+              <span key={index} className={`text-content text-md italic`}>#{hashTag}</span>
             ))}
           </div>
         </div>
         <div>
           <p className="mb-2 text-content text-md font-medium">Tech Stack:</p>
-          <div className="truncate" title={project.techStack?.join(', ')}>
+          <div className="grid md:grid-cols-4 grid-cols-3 gap-1">
             {project.techStack?.map((stack: string, index: number) => (
-              <span key={index} className={`text-content text-md ${index > 0 && 'ml-3'}`}>{stack}</span>
+              <span key={index} className={`text-content text-md`}>{stack}</span>
             ))}
           </div>
         </div>
