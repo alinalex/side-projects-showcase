@@ -4,6 +4,7 @@ import { GeistMono } from 'geist/font/mono';
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs';
 import { Toaster } from "@/components/ui/toaster"
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   // todo: complete metadata for seo
