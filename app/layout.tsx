@@ -4,10 +4,9 @@ import { GeistMono } from 'geist/font/mono';
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs';
 import { Toaster } from "@/components/ui/toaster"
-import Link from 'next/link';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
-  // todo: complete metadata for seo
   title: 'Side Projects Showcase',
   description: 'Showcase your side-projects to the whole world.',
 }
@@ -30,6 +29,7 @@ export default function RootLayout({
             {children}
           </main>
           <Toaster />
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>
