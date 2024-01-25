@@ -30,17 +30,18 @@ export default function SideProjectCard({ project, handler }: { project: SidePro
       </CardHeader>
       <CardContent className="pb-4">
         <div className="mb-4">
-          <div className="grid md:grid-cols-4 grid-cols-3 gap-1">
+          <p className="mb-2 text-content text-md font-medium">Topics:</p>
+          <div className="flex flex-wrap content-start">
             {project.topics?.map((hashTag: string, index: number) => (
-              <span key={index} className={`text-content text-md italic`}>#{hashTag}</span>
+              <span key={index} className={`text-content text-md px-2 border rounded-xl bg-[#eef2ff] mb-2 mr-2`}>#{hashTag}</span>
             ))}
           </div>
         </div>
         <div>
           <p className="mb-2 text-content text-md font-medium">Tech Stack:</p>
-          <div className="grid md:grid-cols-4 grid-cols-3 gap-1">
+          <div className="flex flex-wrap content-start">
             {project.techStack?.map((stack: string, index: number) => (
-              <span key={index} className={`text-content text-md`}>{stack}</span>
+              <span key={index} className={`text-content text-md px-2 border rounded-xl bg-[#eef2ff] mb-2 mr-2`}>{stack}</span>
             ))}
           </div>
         </div>

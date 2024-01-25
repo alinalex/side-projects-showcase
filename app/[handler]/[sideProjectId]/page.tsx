@@ -42,17 +42,17 @@ export default async function SideProjectItem({ params }: { params: { sideProjec
       <p className="text-base sm:text-lg text-content mb-3">{project.description}</p>
       <div className="mb-4 border shadow-lg rounded-lg p-3">
         <p className="font-medium text-lg mb-2">Tech stack</p>
-        <div className="grid md:grid-cols-6 grid-cols-3 gap-1">
+        <div className="flex flex-wrap content-start">
           {project.techStack?.map((stack: string, index: number) => (
-            <span key={index} className={`{}`}>{stack}</span>
+            <span key={index} className={`text-content text-md px-2 border rounded-xl bg-[#eef2ff] mb-2 mr-2`}>{stack}</span>
           ))}
         </div>
       </div>
       <div className="mb-4 border shadow-lg rounded-lg p-3">
         <p className="font-medium text-lg mb-2">Topics</p>
-        <div className="grid md:grid-cols-6 grid-cols-3 gap-1">
+        <div className="flex flex-wrap content-start">
           {project.topics?.map((hashTag: string, index: number) => (
-            <span key={index} className={`{}`}>#{hashTag}</span>
+            <span key={index} className={`text-content text-md px-2 border rounded-xl bg-[#eef2ff] mb-2 mr-2`}>#{hashTag}</span>
           ))}
         </div>
       </div>
